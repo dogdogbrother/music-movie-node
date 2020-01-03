@@ -1,0 +1,31 @@
+{
+  "name": "music-movie-node",
+  "version": "1.0.0",
+  "description": "听歌电影交友",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev nodemon src/index.js",
+    "start": "cross-env NODE_ENV=production node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dogdogbrother/music-movie-node.git"
+  },
+  "author": "senlin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dogdogbrother/music-movie-node/issues"
+  },
+  "homepage": "https://github.com/dogdogbrother/music-movie-node#readme",
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-json-error": "^3.1.2",
+    "koa-router": "^7.4.0",
+    "mongoose": "^5.8.4"
+  },
+  "devDependencies": {
+    "cross-env": "^6.0.3",
+    "nodemon": "^2.0.2"
+  }
+}
