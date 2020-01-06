@@ -1,3 +1,4 @@
 /node_modules/
-/movie/
-/music/
+# /movie/
+# /music/
+/avatar/
