@@ -12,6 +12,7 @@ const app = new Koa()
 
 const { connectionStr } = require('./config')
 
+mongoose.set('useFindAndModify', false)
 mongoose.connect(connectionStr, { useUnifiedTopology: true,  useNewUrlParser: true }, () => {
   console.log('链接成功');
 })
@@ -22,7 +23,7 @@ app.use(koaStatic(path.join(__dirname, '../public')))
 app.use(koaBody({
   multipart: true,
   formidable: {
-    uploadDir: path.join(__dirname,'../public'),
+    uploadDir: path.join(__dirname,'../public/avatar'),
     keepExtensions: true
   }
 }))

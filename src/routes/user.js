@@ -1,10 +1,17 @@
 
 const Router = require('koa-router')
-const { login, register } = require('../controllers/users')
+const jwt = require('koa-jwt')
 
-const usersRouter = new Router({prefix:'/users'})
+const { secret } = require('../config')
+const auth = jwt({ secret })
+
+const { login, register, info, update } = require('../controllers/users')
+
+const usersRouter = new Router({prefix:'/user'})
 
 usersRouter.post('/login',login)
 usersRouter.post('/register',register)
+usersRouter.get('/info', auth, info)
+usersRouter.patch('/update', auth, update)
 
 module.exports = usersRouter
