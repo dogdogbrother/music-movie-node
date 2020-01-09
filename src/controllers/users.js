@@ -36,13 +36,16 @@ class UsersCtl {
       const salt = bcrypt.genSaltSync(10);
       var hashPassword = bcrypt.hashSync(password, salt);
 
-      new User({ 
+      const user = await new User({ 
         user_name, 
         password: hashPassword,
         avatar_url:`./avatar_default/${Math.floor(Math.random()*8+1)}.jpg`
       }).save();
-
-      ctx.body = '注册成功'
+      if(user) {
+        ctx.body = '注册成功'
+      } else{
+        ctx.throw(500, '服务器内部错误')
+      }
     }
     async info(ctx) { 
       const { fields } = ctx.query
@@ -56,7 +59,7 @@ class UsersCtl {
 
       const { avatar_url } = ctx.request.body
       if (avatar_url) {
-        const shellCode = await shell.exec(`mv ../../public/${avatar_url} ../../public/avatar_user/`);
+        const shellCode = await shell.exec(`mv ./public/${avatar_url} ./public/avatar_user/`);
         if (!shellCode) {
           return ctx.throw(500, '保存用户头像失败')
         }
