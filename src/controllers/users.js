@@ -39,8 +39,7 @@ class UsersCtl {
       new User({ 
         user_name, 
         password: hashPassword,
-        avatar_url:`http://49.233.185.168:3009/avatar_default/${Math.floor(Math.random()*8+1)}.jpg`,
-        gender: '741'
+        avatar_url:`./avatar_default/${Math.floor(Math.random()*8+1)}.jpg`
       }).save();
 
       ctx.body = '注册成功'

@@ -7,7 +7,7 @@ const auth = jwt({ secret })
 
 const { picture } = require('../controllers/files')
 
-const usersRouter = new Router({prefix:'/files'})
+const usersRouter = new Router({prefix:'/file'})
 
 usersRouter.post('/picture', auth, picture)
 
