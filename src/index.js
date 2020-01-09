@@ -23,7 +23,7 @@ app.use(koaStatic(path.join(__dirname, '../public')))
 app.use(koaBody({
   multipart: true,
   formidable: {
-    uploadDir: path.join(__dirname,'../public/avatar'),
+    uploadDir: path.join(__dirname,'../public'),
     keepExtensions: true
   }
 }))
