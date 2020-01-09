@@ -2,6 +2,7 @@ const User = require('../models/users');
 const bcrypt = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
 const path = require('path')
+const shell = require('shelljs')
 
 const { secret } = require('../config')
 
@@ -38,7 +39,7 @@ class UsersCtl {
       new User({ 
         user_name, 
         password: hashPassword,
-        avatar_url:`http://49.233.185.168:3009/avatar/${Math.floor(Math.random()*8+1)}.jpg`,
+        avatar_url:`http://49.233.185.168:3009/avatar_default/${Math.floor(Math.random()*8+1)}.jpg`,
         gender: '741'
       }).save();
 
@@ -53,16 +54,22 @@ class UsersCtl {
     async update(ctx) {
       const { fields } = ctx.query
       const select = fields.split(';').filter(f => f && f !== 'password').map(f => ' +' + f ).join('')
-      if (ctx.request.files.file) {
-        const basename = path.basename(ctx.request.files.file.path)
-        ctx.request.body.avatar_url = `http://49.233.185.168:3009/avatar/${basename}`
+
+      const { avatar_url } = ctx.request.body
+      if (avatar_url) {
+        const shellCode = await shell.exec(`mv ../../public/${avatar_url} ../../public/avatar_user/`);
+        if (!shellCode) {
+          return ctx.throw(500, '保存用户头像失败')
+        }
+        ctx.request.body.avatar_url = `./avatar_user/${avatar_url}`
       }
       const updateResult = await User.findByIdAndUpdate(
         ctx.state.user.id, 
         ctx.request.body, 
         { new: true, runValidators: true, select }
         )
-      if (updateResult) ctx.body = updateResult
+      if (updateResult) return ctx.body = updateResult
+      ctx.throw(500, '服务器内部错误')
     }
 }
 
