@@ -5,11 +5,10 @@ const jwt = require('koa-jwt')
 const { secret } = require('../config')
 const auth = jwt({ secret })
 
-const { picture } = require('../controllers/files')
+const { music } = require('../controllers/files')
 
 const usersRouter = new Router({prefix:'/file'})
 
-usersRouter.post('/picture', auth, picture)
-
+usersRouter.post('/music', auth, music)
 
 module.exports = usersRouter
