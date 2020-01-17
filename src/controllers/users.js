@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
 const path = require('path')
 const shell = require('shelljs')
-
 const { secret } = require('../config')
+const { returnPaging } = require('../utils')
 
 class UsersCtl {
 
@@ -85,9 +85,7 @@ class UsersCtl {
   }
 
   async updateSongList(ctx) {
-    const { page_size = 10, page_number = 1 } = ctx.query
-    const pageNumber = Math.max(page_number * 1, 1) - 1
-    const pageSize = Math.max(page_size * 1, 1)
+    const { pageNumber, pageSize, page_number } = returnPaging(ctx.query)
     const songList = await Music.find({ upload_user: ctx.state.user.id }).limit(pageSize).skip(pageSize*pageNumber)
     ctx.body = songList
   }
@@ -116,9 +114,7 @@ class UsersCtl {
   }
 
   async followList(ctx) {
-    const { page_size = 10, page_number = 1 } = ctx.query
-    const pageNumber = Math.max(page_number * 1, 1) - 1
-    const pageSize = Math.max(page_size * 1, 1) 
+    const { pageNumber, pageSize, page_number } = returnPaging(ctx.query)
     const user = await User.findById(ctx.state.user.id)
     .select('+following')
     .populate('following')
@@ -128,9 +124,7 @@ class UsersCtl {
   }
 
   async fansList(ctx) {
-    const { page_size = 10, page_number = 1 } = ctx.query
-    const pageNumber = Math.max(page_number * 1, 1) - 1
-    const pageSize = Math.max(page_size * 1, 1) 
+    const { pageNumber, pageSize, page_number } = returnPaging(ctx.query)
     const users = await User.find({ following: ctx.state.user.id }).limit(pageSize).skip(pageSize*pageNumber)
     ctx.body = users
   }

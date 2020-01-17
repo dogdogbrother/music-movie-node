@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-
-const { Schema, model } = mongoose;
+const { Schema, model, options } = require('./config')
 
 const userSchema = new Schema({
   createdAt: { type:String, select: false },
@@ -20,9 +18,6 @@ const userSchema = new Schema({
     select: false,
     default: []
   }
-},{
-  versionKey: false,
-  timestamps: true
-});
+}, options);
 
 module.exports = model('User', userSchema);

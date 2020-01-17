@@ -1,8 +1,7 @@
+const { Schema, model, options } = require('./config')
+
 const mongoose = require('mongoose');
-
-const { Schema, model } = mongoose;
-
-const userSchema = new Schema({
+const musicSchema = new Schema({
   createdAt: { type:String, select: false },
   updatedAt: { type:String, select: false },
   song_name: { type:String, required: true },
@@ -10,9 +9,6 @@ const userSchema = new Schema({
   author: { type: String, required: true },
   cover_url: { type: String, default: ''},
   upload_user:{ type: Schema.Types.ObjectId, required: true, ref:'User', select: false }
-},{
-  versionKey: false,
-  timestamps: true
-});
+},options);
 
-module.exports = model('Music', userSchema);
+module.exports = model('Music', musicSchema);
