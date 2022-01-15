@@ -30,7 +30,7 @@
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "mongoose": "^5.8.4",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "cross-env": "^6.0.3",
